@@ -31,6 +31,20 @@ const handleClick = (e) => {
   }));
 };
 
+const DeleteTransaction = async (id) => {
+  try {
+    await axios.delete(
+      `http://localhost/expense_tracker_react/src/php/deleteTransaction.php?id=${id}`
+    );
+    setTransactions((prev) =>
+      prev.filter((transaction) => transaction.id !== id)
+    );
+  } catch (error) {
+    console.error("Error deleting transaction:", error);
+    setError("Failed to delete transaction");
+  }
+};
+
 const AddTransaction = async () => {
   if (
     !transaction.date ||
@@ -171,9 +185,7 @@ const Tracker = () => {
                   <td>{transaction.amount}</td>
                   <td>{transaction.note}</td>
                   <td>
-                    <button
-                      onClick={() => handleDeleteTransaction(transaction.id)}
-                    >
+                    <button onClick={() => DeleteTransaction(transaction.id)}>
                       Delete
                     </button>
                   </td>
