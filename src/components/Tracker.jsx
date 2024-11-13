@@ -10,6 +10,15 @@ import logoAll from "../assets/icons/all.png";
 import income from "../assets/icons/income.png";
 import expense from "../assets/icons/spending.png";
 
+const TransactionForm = () => {
+  const [transaction, setTransaction] = useState({
+    date: "",
+    type: "",
+    amount: "",
+    note: "",
+  });
+};
+
 const Tracker = () => {
   return (
     <div>
@@ -93,7 +102,7 @@ const Tracker = () => {
               <input type="text" id="noteTransaction" placeholder="Notes" />
             </div>
 
-            <button className="button" id="addBttn">
+            <button className="button" onClick={handleClick}>
               ADD
             </button>
 
