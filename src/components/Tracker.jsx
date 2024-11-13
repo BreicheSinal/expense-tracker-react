@@ -1,4 +1,3 @@
-import React from "react";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -46,7 +45,7 @@ const AddTransaction = async () => {
 
   try {
     const response = await axios.post(
-      "http:///expense_tracker_react/src/php/storeTransaction.php",
+      "http://localhost/expense_tracker_react/src/php/storeTransaction.php",
       transaction
     );
     setTransactions((prev) => [...prev, response.data]);
@@ -78,35 +77,6 @@ const Tracker = () => {
         <div className="container flex column">
           <div className="flex title space-between">
             <h1 className="primary-color">EXPENSE TRACKER</h1>
-            <div className="flex gap justify-center align-center filters">
-              <div>
-                <p className="bold">TYPE</p>
-                <select id="filterType">
-                  <option value="All">All</option>
-                  <option value="Income">Income</option>
-                  <option value="Expense">Expense</option>
-                </select>
-              </div>
-              <div>
-                <p className="bold">PRICE</p>
-                <select id="filterPrice">
-                  <option value="None">None</option>
-                  <option value="Minimum">Minimum</option>
-                  <option value="Maximum">Maximum</option>
-                </select>
-              </div>
-              <div>
-                <p className="bold">DATE</p>
-                <select id="filterDate">
-                  <option value="None">None</option>
-                  <option value="Earliest">Earliest</option>
-                  <option value="Latest">Latest</option>
-                </select>
-              </div>
-              <button className="button" id="applyBttn">
-                Apply Filters
-              </button>
-            </div>
           </div>
 
           <div className="flex align-center gap search-bar">
@@ -175,7 +145,9 @@ const Tracker = () => {
               ADD
             </button>
 
-            <div className="margin-top bold red-color" id="resMsg"></div>
+            <div className="margin-top bold red-color">
+              {error && <p>{error}</p>}
+            </div>
           </div>
 
           <table className="full-width">
