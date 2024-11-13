@@ -102,6 +102,19 @@ const Tracker = () => {
     fetchTransactions();
   }, []);
 
+  const TotalBudget = () => {
+    return transactions
+      .reduce((sum, transaction) => {
+        if (transaction.type === "Income") {
+          return sum + parseFloat(transaction.amount);
+        } else if (transaction.type === "Expense") {
+          return sum - parseFloat(transaction.amount);
+        }
+        return sum;
+      }, 0)
+      .toFixed(2);
+  };
+
   return (
     <div>
       <section className="tracker full-width flex">
@@ -223,11 +236,7 @@ const Tracker = () => {
                   TOTAL BUDGET
                 </td>
                 <td className="bold primary-color" id="total$">
-                  $
-                  {transactions.reduce(
-                    (sum, transaction) => sum + parseFloat(transaction.amount),
-                    0
-                  )}
+                  ${TotalBudget()}
                 </td>
               </tr>
             </tbody>
