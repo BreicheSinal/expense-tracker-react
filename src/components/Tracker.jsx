@@ -162,17 +162,37 @@ const Tracker = () => {
               </tr>
             </thead>
 
-            <tbody className="primary-color" id="transactions"></tbody>
+            <tbody className="primary-color" id="transactions">
+              {transactions.map((transaction) => (
+                <tr key={transaction.id}>
+                  <td>{transaction.date}</td>
+                  <td>{transaction.type}</td>
+                  <td>{transaction.name}</td>
+                  <td>{transaction.amount}</td>
+                  <td>{transaction.note}</td>
+                  <td>
+                    <button
+                      onClick={() => handleDeleteTransaction(transaction.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
 
           <table className="total">
             <tbody>
               <tr>
                 <td className="primary-bgColor white-color bold">
-                  TOTA BUDGET
+                  TOTAL BUDGET
                 </td>
                 <td className="bold primary-color" id="total$">
-                  0
+                  {transactions.reduce(
+                    (sum, transaction) => sum + parseFloat(transaction.amount),
+                    0
+                  )}
                 </td>
               </tr>
             </tbody>
