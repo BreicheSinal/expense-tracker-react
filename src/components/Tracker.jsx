@@ -16,6 +16,7 @@ const Tracker = () => {
   const [transaction, setTransaction] = useState({
     date: "",
     type: "Income",
+    name: "",
     amount: "",
     note: "",
   });
