@@ -13,7 +13,7 @@ import expense from "../assets/icons/spending.png";
 const TransactionForm = () => {
   const [transaction, setTransaction] = useState({
     date: "",
-    type: "",
+    type: "Income",
     amount: "",
     note: "",
   });
