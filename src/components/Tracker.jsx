@@ -19,6 +19,9 @@ const TransactionForm = () => {
   });
 };
 
+const [transactions, setTransactions] = useState([]);
+const [error, setError] = useState("");
+
 const Tracker = () => {
   return (
     <div>
