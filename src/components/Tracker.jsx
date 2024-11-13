@@ -33,7 +33,7 @@ const Tracker = () => {
 
   const DeleteTransaction = async (id) => {
     try {
-      await axios.delete(
+      await axios.get(
         `http://localhost/expense_tracker_react/src/php/deleteTransaction.php?id=${id}`
       );
       setTransactions((prev) =>
@@ -65,7 +65,7 @@ const Tracker = () => {
       setTransactions((prev) => [...prev, response.data]);
       setTransaction({
         date: "",
-        type: "Income",
+        type: "",
         name: "",
         amount: "",
         note: "",
