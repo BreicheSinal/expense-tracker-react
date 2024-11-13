@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 import "../styles/base.css";
@@ -11,73 +11,70 @@ import logoAll from "../assets/icons/all.png";
 import income from "../assets/icons/income.png";
 import expense from "../assets/icons/spending.png";
 
-const TransactionForm = () => {
+const Tracker = () => {
   const [transaction, setTransaction] = useState({
     date: "",
     type: "Income",
     amount: "",
     note: "",
   });
-};
 
-const [transactions, setTransactions] = useState([]);
-const [error, setError] = useState("");
+  const [transactions, setTransactions] = useState([]);
+  const [error, setError] = useState("");
 
-const handleClick = (e) => {
-  const { name, value } = e.target;
-  setTransaction((prev) => ({
-    ...prev,
-    [name]: value,
-  }));
-};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setTransaction((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
-const DeleteTransaction = async (id) => {
-  try {
-    await axios.delete(
-      `http://localhost/expense_tracker_react/src/php/deleteTransaction.php?id=${id}`
-    );
-    setTransactions((prev) =>
-      prev.filter((transaction) => transaction.id !== id)
-    );
-  } catch (error) {
-    console.error("Error deleting transaction:", error);
-    setError("Failed to delete transaction");
-  }
-};
+  const DeleteTransaction = async (id) => {
+    try {
+      await axios.delete(
+        `http://localhost/expense_tracker_react/src/php/deleteTransaction.php?id=${id}`
+      );
+      setTransactions((prev) =>
+        prev.filter((transaction) => transaction.id !== id)
+      );
+    } catch (error) {
+      console.error("Error deleting transaction:", error);
+      setError("Failed to delete transaction");
+    }
+  };
 
-const AddTransaction = async () => {
-  if (
-    !transaction.date ||
-    !transaction.type ||
-    !transaction.name ||
-    !transaction.amount ||
-    !transaction.note
-  ) {
-    setError("All fields are required");
-    return;
-  }
+  const AddTransaction = async () => {
+    if (
+      !transaction.date ||
+      !transaction.type ||
+      !transaction.name ||
+      !transaction.amount ||
+      !transaction.note
+    ) {
+      setError("All fields are required");
+      return;
+    }
 
-  try {
-    const response = await axios.post(
-      "http://localhost/expense_tracker_react/src/php/storeTransaction.php",
-      transaction
-    );
-    setTransactions((prev) => [...prev, response.data]);
-    setTransaction({
-      date: "",
-      type: "Income",
-      name: "",
-      amount: "",
-      note: "",
-    });
-    setError("");
-  } catch (error) {
-    console.error("Error adding transaction:", error);
-    setError("Failed to add transaction");
-  }
-};
-
-const Tracker = () => {
+    try {
+      const response = await axios.post(
+        "http://localhost/expense_tracker_react/src/php/storeTransaction.php",
+        transaction
+      );
+      setTransactions((prev) => [...prev, response.data]);
+      setTransaction({
+        date: "",
+        type: "Income",
+        name: "",
+        amount: "",
+        note: "",
+      });
+      setError("");
+    } catch (error) {
+      console.error("Error adding transaction:", error);
+      setError("Failed to add transaction");
+    }
+  };
   return (
     <div>
       <section className="tracker full-width flex">
@@ -155,7 +152,7 @@ const Tracker = () => {
               />{" "}
             </div>
 
-            <button className="button" onClick={handleClick}>
+            <button className="button" onClick={AddTransaction}>
               ADD
             </button>
 
@@ -201,6 +198,7 @@ const Tracker = () => {
                   TOTAL BUDGET
                 </td>
                 <td className="bold primary-color" id="total$">
+                  $
                   {transactions.reduce(
                     (sum, transaction) => sum + parseFloat(transaction.amount),
                     0
