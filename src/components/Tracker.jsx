@@ -22,6 +22,14 @@ const TransactionForm = () => {
 const [transactions, setTransactions] = useState([]);
 const [error, setError] = useState("");
 
+const handleClick = (e) => {
+  const { name, value } = e.target;
+  setTransaction((prev) => ({
+    ...prev,
+    [name]: value,
+  }));
+};
+
 const Tracker = () => {
   return (
     <div>
