@@ -1,5 +1,18 @@
+body {
+  background-color: white;
+}
+
 .tracker {
   min-height: 100vh;
+}
+
+.icon {
+  width: 25px;
+  height: 25px;
+}
+
+.iconBttn {
+  background-color: transparent;
 }
 
 .sidebar {
@@ -20,6 +33,7 @@
   padding: 20px;
   width: 90%;
   border: 5px solid #00599c;
+  gap: 20px;
 }
 
 .container > div > h1 {

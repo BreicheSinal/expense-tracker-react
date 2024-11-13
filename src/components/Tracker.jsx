@@ -10,6 +10,7 @@ import "../styles/tracker.css";
 import logoAll from "../assets/icons/all.png";
 import income from "../assets/icons/income.png";
 import expense from "../assets/icons/spending.png";
+import deleteLogo from "../assets/icons/delete.png";
 
 const Tracker = () => {
   const [transaction, setTransaction] = useState({
@@ -88,11 +89,6 @@ const Tracker = () => {
         <div className="container flex column">
           <div className="flex title space-between">
             <h1 className="primary-color">EXPENSE TRACKER</h1>
-          </div>
-
-          <div className="flex align-center gap search-bar">
-            <p className="bold">SEARCH NOTE</p>
-            <input type="text" placeholder="Search note..." id="filterNote" />
           </div>
 
           <div className="flex align-center gap input">
@@ -182,8 +178,11 @@ const Tracker = () => {
                   <td>{transaction.amount}</td>
                   <td>{transaction.note}</td>
                   <td>
-                    <button onClick={() => DeleteTransaction(transaction.id)}>
-                      Delete
+                    <button
+                      className="iconBttn"
+                      onClick={() => DeleteTransaction(transaction.id)}
+                    >
+                      <img className="icon" src={deleteLogo} />
                     </button>
                   </td>
                 </tr>
