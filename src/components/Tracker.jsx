@@ -1,4 +1,6 @@
 import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 import "../styles/base.css";
 import "../styles/utilities.css";
@@ -28,6 +30,38 @@ const handleClick = (e) => {
     ...prev,
     [name]: value,
   }));
+};
+
+const AddTransaction = async () => {
+  if (
+    !transaction.date ||
+    !transaction.type ||
+    !transaction.name ||
+    !transaction.amount ||
+    !transaction.note
+  ) {
+    setError("All fields are required");
+    return;
+  }
+
+  try {
+    const response = await axios.post(
+      "http:///expense_tracker_react/src/php/storeTransaction.php",
+      transaction
+    );
+    setTransactions((prev) => [...prev, response.data]);
+    setTransaction({
+      date: "",
+      type: "Income",
+      name: "",
+      amount: "",
+      note: "",
+    });
+    setError("");
+  } catch (error) {
+    console.error("Error adding transaction:", error);
+    setError("Failed to add transaction");
+  }
 };
 
 const Tracker = () => {
@@ -83,11 +117,22 @@ const Tracker = () => {
           <div className="flex align-center gap input">
             <div>
               <p className="bold">DATE</p>
-              <input type="date" id="dateTransaction" />
+              <input
+                type="date"
+                name="date"
+                value={transaction.date}
+                onChange={handleChange}
+                id="dateTransaction"
+              />{" "}
             </div>
             <div>
               <p className="bold">TYPE</p>
-              <select id="typeTransaction">
+              <select
+                name="type"
+                value={transaction.type}
+                onChange={handleChange}
+                id="typeTransaction"
+              >
                 <option value="Income">INCOME</option>
                 <option value="Expense">EXPENSE</option>
               </select>
@@ -96,6 +141,9 @@ const Tracker = () => {
               <p className="bold">NAME</p>
               <input
                 type="text"
+                name="name"
+                value={transaction.name}
+                onChange={handleChange}
                 id="nameTransaction"
                 placeholder="Transaction Name"
               />
@@ -104,13 +152,23 @@ const Tracker = () => {
               <p className="bold">AMOUNT</p>
               <input
                 type="number"
+                name="amount"
+                value={transaction.amount}
+                onChange={handleChange}
                 id="amountTransaction"
                 placeholder="Amount"
               />
             </div>
             <div>
               <p className="bold">NOTE</p>
-              <input type="text" id="noteTransaction" placeholder="Notes" />
+              <input
+                type="text"
+                name="note"
+                value={transaction.note}
+                onChange={handleChange}
+                id="noteTransaction"
+                placeholder="Notes"
+              />{" "}
             </div>
 
             <button className="button" onClick={handleClick}>
