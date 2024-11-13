@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import "../styles/base.css";
@@ -76,6 +76,32 @@ const Tracker = () => {
       setError("Failed to add transaction");
     }
   };
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost/expense_tracker_react/src/php/getTransactions.php"
+        );
+        console.log("Fetched Transactions:", response.data);
+        const formattedTransactions = response.data.map((transaction) => ({
+          id: transaction.id,
+          date: transaction.date_transaction,
+          type: transaction.transaction_type,
+          name: transaction.name,
+          amount: transaction.amount,
+          note: transaction.note,
+        }));
+        setTransactions(formattedTransactions);
+      } catch (error) {
+        console.error("Error fetching transactions:", error);
+        setError("Failed to fetch transactions");
+      }
+    };
+
+    fetchTransactions();
+  }, []);
+
   return (
     <div>
       <section className="tracker full-width flex">

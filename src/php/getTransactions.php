@@ -1,9 +1,5 @@
 <?php
 
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST");
-header("Access-Control-Allow-Headers: Content-Type");
-
 include "connection.php";
 
 $query = $connection->prepare("SELECT * FROM transactions WHERE user_id=1");
